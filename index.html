@@ -1,74 +1,250 @@
 <!DOCTYPE html>
-<html> 
+<html lang="en">
 <head>
-  <title>Happy Birthday Advik!</title>
-  <style>
-    body {
-     background: url('https://i.imgur.com/zvWt0yQ.png') repeat;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advik’s 17th Birthday Puzzle</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111;
+    color: #eee;
+    margin: 0; padding: 20px;
+    user-select: none;
+  }
+  h1, h2 {
+    color: #6cf;
+  }
+  .warning {
+    background: #880000;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    border-radius: 8px;
+  }
+  .section {
+    margin-bottom: 30px;
+    border: 2px solid #444;
+    padding: 15px;
+    border-radius: 8px;
+    background: #222;
+  }
+  button {
+    background: #3399ff;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  button:hover {
+    background: #2277dd;
+  }
+  input[type=text] {
+    padding: 6px;
+    font-size: 1em;
+    width: 200px;
+  }
+  .hidden {
+    display: none;
+  }
+  .message {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  /* Map styling */
+  #finalMap {
+    margin-top: 20px;
+    border: 3px solid #6cf;
+    border-radius: 12px;
+    background: #223344 url('https://i.imgur.com/ZB5oZRY.png') no-repeat center;
+    background-size: contain;
+    position: relative;
+    width: 320px;
+    height: 240px;
+    user-select: none;
+  }
+  /* Marker dot */
+  #marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: gold;
+    border-radius: 50%;
+    border: 3px solid #ff0;
+    top: 160px; /* adjust roughly for garden area */
+    left: 230px; /* adjust roughly for mini garage */
+    box-shadow: 0 0 12px 3px gold;
+  }
+  #hintText {
+    margin-top: 10px;
+    font-style: italic;
+    color: #ccf;
+    font-weight: 600;
+  }
 
-      color: white;
-      text-align: center;
-      font-family: 'Segoe UI', sans-serif;
-      padding-top: 100px;
-    }
-    h1 {
-      font-size: 3em;
-      text-shadow: 2px 2px 5px #000;
-    }
-    #diamond {
-      width: 150px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    #diamond:hover {
-      transform: scale(1.1);
-    }
-    #message {
-      margin: 40px auto;
-      width: 90%;
-      max-width: 500px;
-      font-size: 1.2em;
-      line-height: 1.5em;
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      border-radius: 15px;
-    }
-    #footer {
-      margin-top: 50px;
-      font-size: 1em;
-      opacity: 0.8;
-    }
-  </style>
+  /* Fun facts box */
+  #funFactsBox {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: #222a44;
+    border: 2px solid #66aaff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 15px #66aaffaa;
+    z-index: 9999;
+  }
+  #funFactsText {
+    font-size: 1em;
+    margin-bottom: 12px;
+  }
+  .redWord {
+    color: #ff4444;
+    font-weight: 700;
+  }
+
+  /* Coin balance top-right */
+  #coinBalance {
+    position: fixed;
+    top: 20px;
+    right: 360px;
+    background: #444466dd;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: gold;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+    line-height: 50px;
+    user-select: none;
+    box-shadow: 0 0 15px gold;
+    z-index: 10000;
+  }
+  /* Coin spawn animation */
+  #coinSpawn {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 3em;
+    color: gold;
+    pointer-events: none;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    z-index: 10001;
+  }
+</style>
 </head>
 <body>
-  <h1>🎉 Happy 17th Birthday, Advik! 🎉</h1>
-  <p>Click the diamond for a surprise sound! 💎</p>
-  
-  <img id="diamond" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/04/Diamond_JE3_BE3.png" alt="Diamond">
 
-  <div id="message">
-    Happy 17! Just one more year till you're officially an adult!  
-    Have fun the whole year and hope you have a great year ahead.  
-    🎂🎮💚
+<h1>Advik’s 17th Birthday Puzzle</h1>
+
+<div class="warning">
+  ⚠️ Press at your own risk! This puzzle will test your brain. ⚠️
+</div>
+
+<!-- Coin balance display -->
+<div id="coinBalance" title="Your Coins">0</div>
+
+<!-- Coin spawn animation -->
+<div id="coinSpawn">🪙</div>
+
+<!-- Fun Facts box -->
+<div id="funFactsBox">
+  <div id="funFactsText"></div>
+  <button id="funContinueBtn">Continue</button>
+</div>
+
+<!-- Clue 1 -->
+<div class="section hidden" id="clue1Section">
+  <h2>Clue 1</h2>
+  <button id="revealClue1Btn">Reveal Clue 1</button>
+  <div id="clue1" class="hidden">
+    <p>
+      The password starts with a fruit you know well.<br>
+      It’s popular in bread you might have tried before.
+    </p>
+    <input type="text" id="answer1" placeholder="Enter the fruit name" />
+    <button id="submit1">Submit</button>
+    <div id="message1" class="message"></div>
   </div>
+</div>
 
-  <audio id="mcsound" preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_76c877307b.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+<!-- Quiz 1 (easy) -->
+<div class="section hidden" id="quiz1">
+  <h2>Idiot Test Level 1</h2>
+  <p>What fruit is yellow and curved?</p>
+  <label><input type="radio" name="q1" value="apple" /> Apple</label><br />
+  <label><input type="radio" name="q1" value="banana" /> Banana</label><br />
+  <label><input type="radio" name="q1" value="grape" /> Grape</label><br />
+  <button id="submitQuiz1">Submit Answers</button>
+  <div id="quizMessage1" class="message"></div>
+</div>
 
-  <div id="footer">
-    — From your neighbor Krishna
+<!-- Clue 2 -->
+<div class="section hidden" id="clue2Section">
+  <h2>Clue 2</h2>
+  <button id="revealClue2Btn">Reveal Clue 2</button>
+  <div id="clue2" class="hidden">
+    <p>
+      Combine the fruit from before to a tasty bread name — one word, no space.<br>
+      (Hint: It’s a popular sweet baked good.)
+    </p>
+    <input type="text" id="answer2" placeholder="Enter the password" />
+    <button id="submit2">Submit</button>
+    <div id="message2" class="message"></div>
   </div>
+</div>
 
-  <script>
-    const diamond = document.getElementById("diamond");
-    const sound = document.getElementById("mcsound");
+<!-- Quiz 2 (medium) -->
+<div class="section hidden" id="quiz2">
+  <h2>Idiot Test Level 2</h2>
+  <p>Answer all questions:</p>
+  <p>1) How many letters are in "banana"?</p>
+  <label><input type="radio" name="q2_1" value="5" /> 5</label><br />
+  <label><input type="radio" name="q2_1" value="6" /> 6</label><br />
+  <label><input type="radio" name="q2_1" value="7" /> 7</label><br />
+  <p>2) What is the capital of Germany?</p>
+  <label><input type="radio" name="q2_2" value="Berlin" /> Berlin</label><br />
+  <label><input type="radio" name="q2_2" value="Munich" /> Munich</label><br />
+  <label><input type="radio" name="q2_2" value="Hamburg" /> Hamburg</label><br />
+  <button id="submitQuiz2">Submit Answers</button>
+  <div id="quizMessage2" class="message"></div>
+</div>
 
-    diamond.addEventListener("click", () => {
-      sound.currentTime = 0;
-      sound.play();
-    });
-  </script>
-</body>
-</html>
+<!-- Final Clue Unlock Section -->
+<div class="section hidden" id="finalClueSection">
+  <h2>Ultimate Clue Unlock</h2>
+  <p>You need at least <strong>20 coins</strong> to unlock the final clue!</p>
+  <p>Redeem a secret code to get more coins:</p>
+  <input type="text" id="redeemInput" placeholder="Enter passcode here" />
+  <button id="redeemBtn">Redeem</button>
+  <div id="redeemMessage" class="message"></div>
+</div>
+
+<!-- Final Map Section -->
+<div class="section hidden" id="finalMapSection">
+  <h2>Final Map</h2>
+  <div id="finalMap">
+    <div id="marker" title="Treasure Location"></div>
+  </div>
+  <div id="hintText">Hint: Near the mini garage where the cycles and stuff are.</div>
+  <p style="margin-top:20px; font-style: italic;">
+    The words in red are important for that treasure.
+  </p>
+</div>
+
+<script>
+  // Fun facts data
+  const funFacts = [
+    'Sometimes you just need to <span class="redWord">play</span> outside and enjoy the fresh air.',
+    'Have you tried the new update on <span class="redWord">fortnite</span>? It’s really fun!',
+    'I thought I told you <span class="red
