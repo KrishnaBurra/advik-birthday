@@ -1,103 +1,73 @@
-<!DOCTYPE html>  
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy 17th Birthday, Advik!</title>
+  <title>Happy Birthday Advik!</title>
   <style>
-    @font-face {
-      font-family: 'Minecraftia';
-      src: url('https://cdn.jsdelivr.net/gh/paulrobertlloyd/Minecraftia/Minecraftia.ttf') format('truetype');
-    }
-
     body {
-      margin: 0;
-      background: linear-gradient(to bottom, #8bc34a 0%, #558b2f 100%);
-      font-family: 'Minecraftia', monospace, sans-serif;
+      background: url('https://i.imgur.com/EjF2MyP.png') repeat;
       color: white;
       text-align: center;
-      padding: 60px 20px;
-      user-select: none;
+      font-family: 'Segoe UI', sans-serif;
+      padding-top: 100px;
     }
-
     h1 {
-      font-size: 4em;
-      text-shadow: 4px 4px 0 #2e7d32, 6px 6px 5px #1b5e20;
-      margin-bottom: 10px;
+      font-size: 3em;
+      text-shadow: 2px 2px 5px #000;
     }
-
-    p {
-      font-size: 1.5em;
-      margin-top: 0;
-      margin-bottom: 40px;
-      text-shadow: 2px 2px 0 #1b5e20;
-    }
-
-    button {
-      background-color: #43a047;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 6px #2e7d32;
-      color: white;
-      font-size: 1.5em;
-      padding: 15px 40px;
+    #diamond {
+      width: 150px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: transform 0.2s;
     }
-
-    button:active {
-      box-shadow: none;
-      transform: translateY(6px);
+    #diamond:hover {
+      transform: scale(1.1);
     }
-
-    .diamond {
-      margin: 20px auto;
-      width: 120px;
-      height: 120px;
-      background:
-        linear-gradient(45deg, #aee1f9 25%, transparent 25%) -30px 0,
-        linear-gradient(-45deg, #aee1f9 25%, transparent 25%) -30px 0,
-        linear-gradient(45deg, transparent 75%, #4fc3f7 75%) -30px 0,
-        linear-gradient(-45deg, transparent 75%, #4fc3f7 75%) -30px 0;
-      background-size: 60px 60px;
-      background-repeat: repeat;
-      position: relative;
-      box-shadow:
-        0 0 20px #81d4fa,
-        inset 0 0 10px #4fc3f7;
-      animation: glow 3s infinite alternate;
+    #message {
+      margin: 40px auto;
+      width: 90%;
+      max-width: 500px;
+      font-size: 1.2em;
+      line-height: 1.5em;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 15px;
     }
-
-    @keyframes glow {
-      0% {
-        box-shadow:
-          0 0 15px #81d4fa,
-          inset 0 0 8px #4fc3f7;
-      }
-      100% {
-        box-shadow:
-          0 0 30px #b3e5fc,
-          inset 0 0 15px #81d4fa;
-      }
+    #footer {
+      margin-top: 50px;
+      font-size: 1em;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
-  <h1>Happy 17th Birthday, Advik!</h1>
-  <p>Hope your year is filled with epic builds and no creeper surprises!</p>
+  <h1>🎉 Happy 17th Birthday, Advik! 🎉</h1>
+  <p>Click the diamond for a surprise sound! 💎</p>
+  
+  <img id="diamond" src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/04/Diamond_JE3_BE3.png" alt="Diamond">
 
-  <div class="diamond" aria-label="Pixel art diamond"></div>
+  <div id="message">
+    Happy 17! Just one more year till you're officially an adult!  
+    Have fun the whole year and hope you have a great year ahead.  
+    🎂🎮💚
+  </div>
 
-  <button onclick="playSound()">Play Minecraft Level Up Sound</button>
+  <audio id="mcsound" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_76c877307b.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
-  <audio id="minecraftSound" src="https://freesound.org/data/previews/341/341695_5121236-lq.mp3"></audio>
+  <div id="footer">
+    — From your neighbor Krishna
+  </div>
 
   <script>
-    function playSound() {
-      const audio = document.getElementById('minecraftSound');
-      audio.currentTime = 0;
-      audio.play();
-    }
+    const diamond = document.getElementById("diamond");
+    const sound = document.getElementById("mcsound");
+
+    diamond.addEventListener("click", () => {
+      sound.currentTime = 0;
+      sound.play();
+    });
   </script>
 </body>
 </html>
