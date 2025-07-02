@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy 17th Birthday, Advik!</title>
+  <style>
+    @font-face {
+      font-family: 'Minecraftia';
+      src: url('https://cdn.jsdelivr.net/gh/paulrobertlloyd/Minecraftia/Minecraftia.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #8bc34a 0%, #558b2f 100%);
+      font-family: 'Minecraftia', monospace, sans-serif;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      user-select: none;
+    }
+
+    h1 {
+      font-size: 4em;
+      text-shadow: 4px 4px 0 #2e7d32, 6px 6px 5px #1b5e20;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.5em;
+      margin-top: 0;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 0 #1b5e20;
+    }
+
+    button {
+      background-color: #43a047;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 6px #2e7d32;
+      color: white;
+      font-size: 1.5em;
+      padding: 15px 40px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:active {
+      box-shadow: none;
+      transform: translateY(6px);
+    }
+
+    .diamond {
+      margin: 20px auto;
+      width: 120px;
+      height: 120px;
+      background:
+        linear-gradient(45deg, #aee1f9 25%, transparent 25%) -30px 0,
+        linear-gradient(-45deg, #aee1f9 25%, transparent 25%) -30px 0,
+        linear-gradient(45deg, transparent 75%, #4fc3f7 75%) -30px 0,
+        linear-gradient(-45deg, transparent 75%, #4fc3f7 75%) -30px 0;
+      background-size: 60px 60px;
+      background-repeat: repeat;
+      position: relative;
+      box-shadow:
+        0 0 20px #81d4fa,
+        inset 0 0 10px #4fc3f7;
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow:
+          0 0 15px #81d4fa,
+          inset 0 0 8px #4fc3f7;
+      }
+      100% {
+        box-shadow:
+          0 0 30px #b3e5fc,
+          inset 0 0 15px #81d4fa;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy 17th Birthday, Advik!</h1>
+  <p>Hope your year is filled with epic builds and no creeper surprises!</p>
+
+  <div class="diamond" aria-label="Pixel art diamond"></div>
+
+  <button onclick="playSound()">Play Minecraft Level Up Sound</button>
+
+  <audio id="minecraftSound" src="https://freesound.org/data/previews/341/341695_5121236-lq.mp3"></audio>
+
+  <script>
+    function playSound() {
+      const audio = document.getElementById('minecraftSound');
+      audio.currentTime = 0;
+      audio.play();
+    }
+  </script>
+</body>
+</html>
