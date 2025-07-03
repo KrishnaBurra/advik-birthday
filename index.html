@@ -2,347 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Happy 17th Birthday Advik!</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7f3e9;
-      margin: 0; padding: 20px;
-      color: #333;
-    }
-    #coin-balance {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: gold;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      display: none;
-      user-select: none;
-      box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    }
-    button {
-      background: #5a9;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-    button:hover {
-      background: #4a8;
-    }
-    .hidden { display: none; }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 15px;
-      margin-top: 10px;
-    }
-    #clue-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #f0e68c;
-      border-radius: 10px;
-      min-height: 80px;
-    }
-    #fun-fact {
-      position: fixed;
-      top: 50px;
-      right: 10px;
-      background: #e0f7fa;
-      border: 1px solid #26c6da;
-      padding: 10px 15px;
-      border-radius: 8px;
-      max-width: 250px;
-      font-size: 14px;
-      color: #007c91;
-      user-select: none;
-    }
-    #map {
-      margin-top: 20px;
-      border: 2px solid #555;
-      border-radius: 10px;
-      max-width: 400px;
-      height: 300px;
-      background: url('https://i.imgur.com/w2x9kaI.png') no-repeat center center;
-      background-size: contain;
-      position: relative;
-    }
-    #map-marker {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: url('https://cdn-icons-png.flaticon.com/512/684/684908.png') no-repeat center center;
-      background-size: contain;
-      top: 70%;
-      left: 75%;
-      transform: translate(-50%, -50%);
-      display: none;
-    }
-    #riddle {
-      margin-top: 25px;
-      font-style: italic;
-      background: #fff3e0;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #ffa726;
-      max-width: 500px;
-    }
-    .red-word {
-      color: red;
-      font-weight: bold;
-      user-select: none;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advik's Birthday Mystery</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- COINS DISPLAY -->
-  <div id="coin-balance">Coins: 0</div>
-
-  <!-- FUN FACT / RED WORD DISPLAY -->
-  <div id="fun-fact" class="hidden"></div>
-
-  <!-- CARD SECTION -->
-  <section id="card-section">
+  <div id="main-card" class="screen">
     <h1>🎉 Happy 17th Birthday, Advik! 🎉</h1>
-    <p>One year till adult! Have fun the whole year and hope you have a great year ahead.</p>
-    <img src="https://i.imgur.com/fO6p6eF.jpg" alt="Birthday Cake" />
-    <br />
-    <button id="start-puzzle-btn">Start Puzzle</button>
-  </section>
+    <p>One year till adulting... Enjoy it while it lasts! 🍫🎈</p>
+    <button onclick="startMystery()">Enter at your own risk</button>
+  </div>
 
-  <!-- PUZZLE SECTION -->
-  <section id="puzzle-section" class="hidden">
-    <h2>Puzzle Time! 🔐</h2>
+  <div id="clue-screen" class="screen hidden">
+    <h2>🔍 Clue Time!</h2>
+    <p id="clue-text"></p>
+    <button onclick="nextClue()">Reveal Next Clue</button>
+  </div>
 
-    <p>Enter the password to continue:</p>
-    <input type="text" id="passcode-input" autocomplete="off" />
-    <button id="submit-passcode-btn">Submit</button>
-    <div id="puzzle-feedback" style="margin-top:15px; min-height:40px;"></div>
+  <div id="quiz-screen" class="screen hidden">
+    <h2>🧠 Idiot Test - Level <span id="level-num">1</span></h2>
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Your answer..." />
+    <button onclick="submitAnswer()">Submit</button>
+  </div>
 
-    <div id="clue-box" class="hidden"></div>
+  <div id="password-screen" class="screen hidden">
+    <h2>🔐 Enter the Secret Password</h2>
+    <img src="banana-bread.jpg" alt="Banana Bread" class="bread-img" />
+    <p><em>Clue: It's a fruit. It's famous. You tried it.</em></p>
+    <input type="text" id="password-input" placeholder="Type the password..." />
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
 
-    <div id="idiot-test" class="hidden" style="margin-top:20px;">
-      <h3>Idiot Test Level: <span id="test-level">1</span></h3>
-      <p id="test-question"></p>
-      <input type="text" id="test-answer" autocomplete="off" />
-      <button id="submit-test-btn">Submit Answer</button>
-      <div id="test-feedback" style="margin-top:10px; min-height:30px;"></div>
-    </div>
+  <div id="map-screen" class="screen hidden">
+    <h2>🎯 The Final Map</h2>
+    <p>The treasure awaits... Find the red X near the garage!</p>
+    <img src="garden-map.jpg" alt="Treasure Map" class="map-img" />
+    <p class="riddle">The words in <span style="color: red">red</span> will guide you if you look closely...</p>
+    <p class="fun-fact" id="fun-fact"></p>
+    <button onclick="nextFact()">Continue</button>
+  </div>
 
-    <div id="map" class="hidden">
-      <div id="map-marker" title="Treasure hidden here!"></div>
-    </div>
-
-    <div id="riddle" class="hidden">
-      <p><strong>Riddle:</strong> The words in <em>red</em> are important for the treasure. Seek the meaning, solve the pleasure.</p>
-    </div>
-
-    <div style="margin-top: 20px;">
-      <p>Redeem coins by entering code:</p>
-      <input type="text" id="redeem-input" autocomplete="off" placeholder="Enter code here" />
-      <button id="redeem-btn">Redeem</button>
-      <div id="redeem-feedback" style="margin-top:10px; min-height:30px;"></div>
-    </div>
-  </section>
-
-<script>
-  const startBtn = document.getElementById('start-puzzle-btn');
-  const cardSection = document.getElementById('card-section');
-  const puzzleSection = document.getElementById('puzzle-section');
-  const passcodeInput = document.getElementById('passcode-input');
-  const submitPasscodeBtn = document.getElementById('submit-passcode-btn');
-  const feedback = document.getElementById('puzzle-feedback');
-  const coinBalance = document.getElementById('coin-balance');
-  const clueBox = document.getElementById('clue-box');
-  const idiotTest = document.getElementById('idiot-test');
-  const testLevelSpan = document.getElementById('test-level');
-  const testQuestion = document.getElementById('test-question');
-  const testAnswerInput = document.getElementById('test-answer');
-  const submitTestBtn = document.getElementById('submit-test-btn');
-  const testFeedback = document.getElementById('test-feedback');
-  const map = document.getElementById('map');
-  const mapMarker = document.getElementById('map-marker');
-  const riddle = document.getElementById('riddle');
-  const funFactDiv = document.getElementById('fun-fact');
-  const redeemInput = document.getElementById('redeem-input');
-  const redeemBtn = document.getElementById('redeem-btn');
-  const redeemFeedback = document.getElementById('redeem-feedback');
-
-  let coins = 0;
-  let clueStep = 0;
-  let idiotTestLevel = 1;
-  let redWords = ['play', 'fortnite', 'already'];
-  let displayedRedWords = [];
-
-  // Fun facts sentences with red words sprinkled randomly
-  const funFacts = [
-    'Did you know that the word <span class="red-word">play</span> is often associated with joy and creativity?',
-    'Many gamers love to <span class="red-word">fortnite</span> as their favorite game around the world.',
-    'If you want to win, you must practice <span class="red-word">already</span> before the tournament starts.'
-  ];
-
-  function showFunFact(index) {
-    funFactDiv.innerHTML = funFacts[index];
-    funFactDiv.classList.remove('hidden');
-  }
-
-  // Animate coin spawn
-  function spawnCoin() {
-    coinBalance.style.display = 'block';
-    const coin = document.createElement('div');
-    coin.textContent = '🪙';
-    coin.style.position = 'fixed';
-    coin.style.left = '50%';
-    coin.style.top = '50%';
-    coin.style.fontSize = '30px';
-    coin.style.userSelect = 'none';
-    coin.style.transform = 'translate(-50%, -50%)';
-    coin.style.transition = 'all 1s ease-out';
-    document.body.appendChild(coin);
-
-    setTimeout(() => {
-      coin.style.top = '10px';
-      coin.style.left = 'calc(100% - 50px)';
-      coin.style.fontSize = '20px';
-      coin.style.opacity = '0';
-    }, 50);
-
-    setTimeout(() => {
-      document.body.removeChild(coin);
-    }, 1100);
-  }
-
-  // Start puzzle on button click
-  startBtn.addEventListener('click', () => {
-    cardSection.classList.add('hidden');
-    puzzleSection.classList.remove('hidden');
-    coinBalance.style.display = 'block';
-    updateCoinBalance();
-    showFunFact(0);
-  });
-
-  // Update coin balance display
-  function updateCoinBalance() {
-    coinBalance.textContent = `Coins: ${coins}`;
-  }
-
-  // Passcode logic
-  submitPasscodeBtn.addEventListener('click', () => {
-    const pass = passcodeInput.value.trim().toLowerCase().replace(/\s/g, '');
-    if (pass === 'bananabread') {
-      if (clueStep === 0) {
-        coins += 5;
-        updateCoinBalance();
-        spawnCoin();
-        feedback.textContent = 'Correct! You earned 5 coins. Here is your first clue: It is a popular fruit bread you tried.';
-        clueStep++;
-        clueBox.textContent = 'Clue 1: The password is a delicious fruit bread with bananas.';
-        clueBox.classList.remove('hidden');
-        passcodeInput.value = '';
-      } else {
-        feedback.textContent = 'You already used this password!';
-      }
-    } else {
-      feedback.textContent = 'Wrong password, try again!';
-    }
-  });
-
-  // Idiot test questions per level
-  const idiotTests = {
-    1: { question: 'What is 2 + 2?', answer: '4' },
-    2: { question: 'Type the word "code" backwards.', answer: 'edoc' },
-    3: { question: 'What color do you get mixing red and blue?', answer: 'purple' }
-  };
-
-  function startIdiotTest() {
-    idiotTest.classList.remove('hidden');
-    testLevelSpan.textContent = idiotTestLevel;
-    testQuestion.textContent = idiotTests[idiotTestLevel].question;
-    testAnswerInput.value = '';
-    testFeedback.textContent = '';
-  }
-
-  submitTestBtn.addEventListener('click', () => {
-    const answer = testAnswerInput.value.trim().toLowerCase();
-    if (answer === idiotTests[idiotTestLevel].answer) {
-      coins += 3;
-      updateCoinBalance();
-      spawnCoin();
-      testFeedback.textContent = `Correct! You earned 3 coins.`;
-      idiotTestLevel++;
-      if (idiotTestLevel > Object.keys(idiotTests).length) {
-        testFeedback.textContent += ' You finished the idiot test!';
-        idiotTest.classList.add('hidden');
-        showMap();
-      } else {
-        // Next question after short delay
-        setTimeout(() => {
-          startIdiotTest();
-        }, 1500);
-      }
-    } else {
-      testFeedback.textContent = 'Wrong answer, try again.';
-    }
-    testAnswerInput.value = '';
-  });
-
-  // Show the garden map and final clue
-  function showMap() {
-    map.classList.remove('hidden');
-    mapMarker.style.display = 'block';
-    riddle.classList.remove('hidden');
-    clueBox.textContent = 'Ultimate Reveal: To get the final clue you need 20 coins. Redeem coins with the secret code!';
-  }
-
-  // Redeem coins by code
-  redeemBtn.addEventListener('click', () => {
-    const code = redeemInput.value.trim().toLowerCase().replace(/\s/g, '');
-    if (code === 'playfortnitealready') {
-      if (coins >= 20) {
-        redeemFeedback.textContent = 'You redeemed the final clue! Treasure is near the small garage where the cycles are.';
-        redeemBtn.disabled = true;
-      } else {
-        redeemFeedback.textContent = 'Not enough coins! Keep earning more.';
-      }
-    } else {
-      redeemFeedback.textContent = 'Invalid code, try again.';
-    }
-    redeemInput.value = '';
-  });
-
-  // Display fun facts and red words one after another with Continue button
-  let currentFunFact = 0;
-
-  function showNextFunFact() {
-    if (currentFunFact < funFacts.length) {
-      funFactDiv.innerHTML = funFacts[currentFunFact] + '<br/><button id="continue-fact">Continue</button>';
-      funFactDiv.classList.remove('hidden');
-
-      document.getElementById('continue-fact').onclick = () => {
-        currentFunFact++;
-        showNextFunFact();
-      };
-    } else {
-      funFactDiv.classList.add('hidden');
-      startIdiotTest();
-    }
-  }
-
-  // Start fun facts on first clue reveal
-  clueBox.addEventListener('DOMSubtreeModified', () => {
-    if (clueStep === 1) {
-      currentFunFact = 0;
-      showNextFunFact();
-    }
-  });
-
-</script>
-
+  <div class="coin-display">🪙 Coins: <span id="coin-count">0</span></div>
+  <script src="script.js"></script>
 </body>
 </html>
