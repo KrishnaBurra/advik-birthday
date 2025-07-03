@@ -2,55 +2,239 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Advik's Birthday Puzzle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy 17th, Advik!</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #ffcc00;
       padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .card {
+      background: white;
+      margin: 20px auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
       max-width: 600px;
-      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
     }
-    button {
-      margin: 10px;
+
+    .image {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .btn {
       padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 200px;
-      margin-right: 10px;
-    }
-    .status {
       font-size: 18px;
-      margin: 15px 0;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    #coins {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      background-color: #fff8dc;
+      padding: 10px 15px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .fun-fact {
+      margin: 10px auto;
+      padding: 15px;
+      background-color: #fff3e0;
+      border-left: 6px solid #ffa726;
+      font-size: 18px;
+      width: 80%;
+      border-radius: 10px;
+    }
+
+    .red {
+      color: red;
+      font-weight: bold;
+    }
+
+    #clue-section, #idiot-test, #redeem-section, #map-section {
+      display: none;
+    }
+
+    .coin-anim {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      margin-left: -50px;
+      margin-top: -50px;
+      animation: popCoin 1s ease-out;
+      z-index: 1000;
+    }
+
+    @keyframes popCoin {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    img.map {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
+  <header>🎉 Happy 17th Birthday, Advik! 🎂</header>
+  <div id="coins">Coins: 0</div>
 
-  <h1>Advik's Birthday Puzzle</h1>
-
-  <div class="status">
-    Coins: <span id="coins">0</span><br />
-    Clues Found: <span id="clues">0</span>
+  <div class="card" id="welcome">
+    <p>Hey Advik! Just one year till you're officially an adult! 🥳</p>
+    <p>Have fun this year, and may it be the best one yet!</p>
+    <img class="image" src="banana-bread.jpg" alt="Banana Bread" />
+    <p><strong>To continue, enter the secret word... it’s a sweet one 🍌🍞</strong></p>
+    <input type="text" id="passwordInput" placeholder="Enter password..." />
+    <button class="btn" onclick="checkPassword()">Unlock</button>
   </div>
 
-  <div>
-    <input type="text" id="passwordInput" placeholder="Enter password" />
-    <button onclick="checkPassword()">Submit Password</button>
+  <div class="card" id="clue-section">
+    <h3>Clue Section 🔐</h3>
+    <p>Click below for a clue... but each clue makes your test harder!</p>
+    <button class="btn" onclick="showClue(1)">Clue 1</button>
+    <button class="btn" onclick="showClue(2)">Clue 2</button>
+    <button class="btn" onclick="showClue(3)">Clue 3</button>
+    <div id="clues"></div>
   </div>
 
-  <div>
-    <button onclick="idiotTest()">Take Idiot Test</button>
-    <button onclick="findClue()">Find Clue</button>
+  <div class="card" id="idiot-test">
+    <h3>🧠 The Idiot Test</h3>
+    <p id="idiot-question">Click to start</p>
+    <button class="btn" onclick="nextIdiot()">Next</button>
   </div>
 
-  <script src="script.js"></script>
+  <div class="card" id="redeem-section">
+    <h3>🎁 Redeem Secret Code</h3>
+    <input type="text" id="redeemInput" placeholder="Enter secret code..." />
+    <button class="btn" onclick="redeem()">Redeem</button>
+  </div>
 
+  <div class="card" id="map-section">
+    <h3>🗺️ The Final Treasure</h3>
+    <p>A hidden treasure lies... where bikes sleep and secrets keep.</p>
+    <img class="map" src="map.jpg" alt="Treasure Map">
+    <p class="fun-fact">🔍 Riddle: <em>“The <strong>words in red</strong> are important for treasure seekers…”</em></p>
+  </div>
+
+  <div class="card" id="fun-facts">
+    <h3>💡 Fun Facts</h3>
+    <div class="fun-fact">Did you know the word <span class="red">play</span> is fun?</div>
+    <div class="fun-fact">Gamers <span class="red">fortnite</span> a lot these days!</div>
+    <div class="fun-fact">I <span class="red">already</span> know you're awesome.</div>
+    <button class="btn" onclick="continueToMap()">Continue</button>
+  </div>
+
+  <img id="coinImage" class="coin-anim" src="coin.png" style="display: none;" />
+
+  <script>
+    let coins = 5;
+    let clueCount = 0;
+    let idiotLevel = 0;
+
+    function updateCoins(amount) {
+      coins += amount;
+      document.getElementById('coins').textContent = 'Coins: ' + coins;
+
+      const coin = document.getElementById('coinImage');
+      coin.style.display = 'block';
+      setTimeout(() => coin.style.display = 'none', 1000);
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+      if (input === 'bananabread') {
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('clue-section').style.display = 'block';
+        updateCoins(5); // Starter bonus
+      } else {
+        alert('Wrong! Think banana...');
+      }
+    }
+
+    function showClue(n) {
+      const clues = [
+        "🍌 It's made with a fruit.",
+        "🥇 It's one of the most popular baked items in the world.",
+        "🌍 You've tried it. Think sweet and yellow!"
+      ];
+      document.getElementById('clues').innerHTML += `<p>${clues[n - 1]}</p>`;
+      clueCount++;
+      updateCoins(1);
+      if (clueCount >= 1) {
+        document.getElementById('idiot-test').style.display = 'block';
+      }
+    }
+
+    function nextIdiot() {
+      const q = [
+        "What color is the sky? (Hint: it's not green)",
+        "Click the button to continue.",
+        "What's 2 + 2?",
+        "Is banana bread a fruit or a cake?",
+        "How many letters in 'fortnite'?"
+      ];
+      const index = idiotLevel < q.length ? idiotLevel : q.length - 1;
+      document.getElementById('idiot-question').textContent = q[index];
+      updateCoins(2);
+      idiotLevel++;
+    }
+
+    function redeem() {
+      const code = document.getElementById('redeemInput').value.trim().toLowerCase();
+      if (code === 'playfortnitealready') {
+        alert('Code accepted!');
+        updateCoins(10);
+        document.getElementById('map-section').style.display = 'block';
+      } else {
+        alert('Wrong code!');
+      }
+    }
+
+    function continueToMap() {
+      if (coins >= 20) {
+        document.getElementById('map-section').style.display = 'block';
+      } else {
+        alert('You need at least 20 coins to unlock the treasure!');
+      }
+    }
+  </script>
 </body>
 </html>
