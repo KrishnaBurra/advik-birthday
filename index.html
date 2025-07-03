@@ -1,49 +1,56 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advik's Birthday Mystery</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advik's Birthday Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      margin-right: 10px;
+    }
+    .status {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+  </style>
 </head>
 <body>
-  <div id="main-card" class="screen">
-    <h1>🎉 Happy 17th Birthday, Advik! 🎉</h1>
-    <p>One year till adulting... Enjoy it while it lasts! 🍫🎈</p>
-    <button onclick="startMystery()">Enter at your own risk</button>
+
+  <h1>Advik's Birthday Puzzle</h1>
+
+  <div class="status">
+    Coins: <span id="coins">0</span><br />
+    Clues Found: <span id="clues">0</span>
   </div>
 
-  <div id="clue-screen" class="screen hidden">
-    <h2>🔍 Clue Time!</h2>
-    <p id="clue-text"></p>
-    <button onclick="nextClue()">Reveal Next Clue</button>
+  <div>
+    <input type="text" id="passwordInput" placeholder="Enter password" />
+    <button onclick="checkPassword()">Submit Password</button>
   </div>
 
-  <div id="quiz-screen" class="screen hidden">
-    <h2>🧠 Idiot Test - Level <span id="level-num">1</span></h2>
-    <p id="question"></p>
-    <input type="text" id="answer" placeholder="Your answer..." />
-    <button onclick="submitAnswer()">Submit</button>
+  <div>
+    <button onclick="idiotTest()">Take Idiot Test</button>
+    <button onclick="findClue()">Find Clue</button>
   </div>
 
-  <div id="password-screen" class="screen hidden">
-    <h2>🔐 Enter the Secret Password</h2>
-    <img src="banana-bread.jpg" alt="Banana Bread" class="bread-img" />
-    <p><em>Clue: It's a fruit. It's famous. You tried it.</em></p>
-    <input type="text" id="password-input" placeholder="Type the password..." />
-    <button onclick="checkPassword()">Unlock</button>
-  </div>
-
-  <div id="map-screen" class="screen hidden">
-    <h2>🎯 The Final Map</h2>
-    <p>The treasure awaits... Find the red X near the garage!</p>
-    <img src="garden-map.jpg" alt="Treasure Map" class="map-img" />
-    <p class="riddle">The words in <span style="color: red">red</span> will guide you if you look closely...</p>
-    <p class="fun-fact" id="fun-fact"></p>
-    <button onclick="nextFact()">Continue</button>
-  </div>
-
-  <div class="coin-display">🪙 Coins: <span id="coin-count">0</span></div>
   <script src="script.js"></script>
+
 </body>
 </html>
