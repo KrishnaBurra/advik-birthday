@@ -116,7 +116,14 @@
 <body>
   <header>🎉 Happy 17th Birthday, Advik! 🎂</header>
   <div id="coins">Coins: 0</div>
-
+<div class="card" id="clue-section">
+    <h3>Clue Section 🔐</h3>
+    <p>Click below for a clue... but each clue makes your test harder!</p>
+    <button class="btn" onclick="showClue(1)">Clue 1</button>
+    <button class="btn" onclick="showClue(2)">Clue 2</button>
+    <button class="btn" onclick="showClue(3)">Clue 3</button>
+    <div id="clues"></div>
+  </div>
   <div class="card" id="welcome">
     <p>Hey Advik! Just one year till you're officially an adult! 🥳</p>
     <p>Have fun this year, and may it be the best one yet!
@@ -125,14 +132,7 @@
     <button class="btn" onclick="checkPassword()">Unlock</button>
   </div>
 
-  <div class="card" id="clue-section">
-    <h3>Clue Section 🔐</h3>
-    <p>Click below for a clue... but each clue makes your test harder!</p>
-    <button class="btn" onclick="showClue(1)">Clue 1</button>
-    <button class="btn" onclick="showClue(2)">Clue 2</button>
-    <button class="btn" onclick="showClue(3)">Clue 3</button>
-    <div id="clues"></div>
-  </div>
+  
 
   <div class="card" id="idiot-test">
     <h3>🧠 The Idiot Test</h3>
